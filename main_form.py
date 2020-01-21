@@ -1,14 +1,5 @@
 from container import Notebook
-
-
-def draw(name_form, function_one, function_two):
-    print(f'************************')
-    print(f'*   {name_form}    *')
-    print(f'*                      *')
-    print(f'*  {function_one.short_name} - {function_one.name}   *')
-    print(f'*  {function_two.short_name} - {function_two.name}   *')
-    print(f'************************')
-
+from age_exception import AgeException
 
 print('--Notebook--')
 print('--C-Create--')
@@ -17,6 +8,8 @@ print('--D-Delete--')
 print('--R-Change--')
 print('--F-Find----')
 print('--P-Print---')
+print('--Z-Record--')
+print('Q-Print JSON')
 print('--E-Exit----')
 notebooks = []
 notebook = Notebook()
@@ -37,21 +30,55 @@ while True:
         print('--создание новой записи--')
         print('введите Фамилию | если данного параметра нет - введите пробел')
         last_name = input()
+        while last_name != '-':
+            try:
+                index = int(last_name)
+                print('Фамилией должна быть строка\nУкажите верную фамилию')
+                last_name = input()
+            except:
+                break
         print('введите Имя | если данного параметра нет - введите пробел')
         first_name = input()
+        while first_name != '-':
+            try:
+                index = int(first_name)
+                print('Имя должно быть строкой\nУкажите верное имя')
+                first_name = input()
+            except:
+                break
         print('введите Отчество | если данного параметра нет - введите пробел')
         middle_name = input()
+        while middle_name != '-':
+            try:
+                index = int(middle_name)
+                print('Отчество должно быть строкой\nУкажите верное отчество')
+                middle_name = input()
+            except:
+                break
         print('введите домашний адрес | если данного параметра нет - введите пробел')
         home_address = input()
+        while home_address != '-':
+            try:
+                index = int(home_address)
+                print('Домашний адрес должен быть строкой\nУкажите верный домашний адрес')
+                home_address = input()
+            except:
+                break
         print('введите номер телефона | если данного параметра нет - введите пробел')
         phone_number = input()
         print('введите возраст | если данного параметра нет - введите пробел')
         age = input()
+        while age != '-':
+            try:
+                index = int(age)
+                break
+            except:
+                print('Возрастом должно быть число\nУкажите верный возраст')
+                age = input()
         notebook.add(first_name=first_name, last_name=last_name, middle_name=middle_name,
                      home_address=home_address, phone_number=phone_number, age=age)
         print('--запись создана--')
         print('чтобы посмотреть все записи нажмите P')
-        #print('введите ФИО, домашний адрес, номер телефона или возраст новой записи')
     elif answer == 'D':
         print('--введите номер записи, которую вы хотите удалить--\n'
               '------иначе - будет удалена последняя запись-------')
@@ -110,13 +137,18 @@ while True:
         if notebook.length() == 0:
             print('К сожалению, пока что нет ни одной записи :(')
         for man in notebook.people:
+            print('--------------------')
+            print('Номер записи: ', notebook.people.index(man)+1)
             print(man)
             print('--------------------')
+    elif answer == 'Z':
+        notebook.record()
+        print('Notebook is record')
+    elif answer == 'Q':
+        print(notebook.read())
+        print('Notebook is read')
+        print('чтобы посмотреть все записи нажмите P')
     elif answer == 'E':
         print('GOOD BYE')
         break
 
-
-# answer = input()
-# if answer == 'Y':
-#     notebook = 0

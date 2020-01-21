@@ -1,4 +1,5 @@
 from data_structure import Man
+import json
 
 
 class Notebook:
@@ -14,6 +15,10 @@ class Notebook:
     def add(self, first_name='', last_name='', middle_name='', home_address='', phone_number='', age=0):
         """Добавляет нового человека в Записную книжку"""
         self.people.append(Man(first_name, last_name, middle_name, home_address, phone_number, age))
+
+    def odd(self, obj):
+        if isinstance(obj, Man):
+            self.add(obj.first_name, obj.last_name, obj.middle_name, obj.home_address, obj.phone_number, obj.age)
 
     def delete(self, index):
         """Удаляет человека под индексом index, если же индекс не указан, то последнего записанного человека"""
@@ -36,3 +41,20 @@ class Notebook:
             if man.last_name == name:
                 return self.people.index(man), man.data()
         return 'Такого человека нет :('
+
+    def record(self):
+        notebook = dict()
+        for man in self.people:
+            notebook[self.people.index(man)] = [man.first_name, man.last_name, man.middle_name, man.home_address, man.phone_number, man.age]
+        data_json = json.dumps(notebook)
+        file_json = open('data_json', 'w')
+        file_json.write(data_json)
+        file_json.close()
+
+    def read(self):
+        file_json = open('data_json', 'r')
+        data_json = file_json.read()
+        file_json.close()
+        data = json.loads(data_json)
+        for man in data:
+            self.add(data[man][0], data[man][1], data[man][2], data[man][3], data[man][4], data[man][5])

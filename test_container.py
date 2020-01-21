@@ -30,7 +30,6 @@ class MyTestInit(unittest.TestCase):
         for man in new_notebook.people:
             print(man)
 
-
     def test_change(self):
         print('-----------\n')
         new_notebook = Notebook()
@@ -49,6 +48,28 @@ class MyTestInit(unittest.TestCase):
         print('\n\n\n')
         print(new_notebook.find("Igor Puzanov Mixail"))
 
+    def test_add(self):
+        new_notebook = Notebook()
+        new_notebook.add('Igor', 'Puzanov', home_address='Izhevsk', phone_number='55-00-55', age=20)
+        self.assertEqual(new_notebook.people[0].data(),
+                         Man('Igor', 'Puzanov', home_address='Izhevsk', phone_number='55-00-55', age=20).data())
+
+    def test_odd(self):
+        new_notebook = Notebook()
+        new_man = Man('Igor', 'Puzanov', home_address='Izhevsk', phone_number='55-00-55', age=20)
+        new_notebook.odd(new_man)
+        new_notebook.odd('hello')
+        print(new_notebook.length())
+        self.assertEqual(new_notebook.people[0].data(),
+                         Man('Igor', 'Puzanov', home_address='Izhevsk', phone_number='55-00-55', age=20).data())
+        self.assertEqual(new_notebook.length(), 1)
+
+    def test_record_and_read(self):
+        new_notebook = Notebook()
+        new_notebook.add('Igor', 'Puzanov', home_address='Izhevsk', phone_number='55-00-55', age=20)
+        new_notebook.record()
+        new_notebook.read()
+        self.assertEqual(new_notebook.length(), 2)
 
 
 if __name__ == '__main__':
